@@ -1,0 +1,30 @@
+{
+    "author": "TwicPics <hello@twic.pics> (https://www.twicpics.com)",
+	"dependencies": {
+    },
+	"description": "a library to build TwicPics URLs",
+    "devDependencies": {
+        "coveralls": "3.0.2",
+        "eslint": "5.2.0",
+        "eslint-config-creative-area": "0.8.0",
+        "nodeunit": "0.11.3",
+        "nyc": "12.0.2"
+    },
+    "engines": {
+        "node": ">=8"
+    },
+    "eslintConfig": {
+        "extends": "creative-area/es2017",
+        "env": {
+            "node": true
+        }
+    },
+    "license": "MIT",
+	"main":  "lib/index.js",
+	"name": "@twicpics/url",
+    "scripts": {
+        "coveralls": "nyc report --reporter=text-lcov | coveralls",
+        "test": "nyc node test"
+    },
+	"version": "0.0.0"
+}
