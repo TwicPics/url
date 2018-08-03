@@ -1,8 +1,8 @@
 {
     "author": "TwicPics <hello@twic.pics> (https://www.twicpics.com)",
-	"dependencies": {
+    "dependencies": {
     },
-	"description": "a library to build TwicPics URLs",
+    "description": "a library to build TwicPics URLs",
     "devDependencies": {
         "coveralls": "3.0.2",
         "eslint": "5.2.0",
@@ -20,11 +20,11 @@
         }
     },
     "license": "MIT",
-	"main":  "lib/index.js",
-	"name": "@twicpics/url",
+    "main":  "lib/index.js",
+    "name": "@twicpics/url",
     "scripts": {
         "coveralls": "nyc report --reporter=text-lcov | coveralls",
         "test": "nyc node test"
     },
-	"version": "0.0.0"
+    "version": "0.0.0"
 }
