@@ -1,5 +1,3 @@
-/.npmignore
-/.nyc_output
-/.travis.yml
-/yarn.lock
+/.*
+/*.lock
 /test
