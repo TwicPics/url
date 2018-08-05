@@ -1,13 +1,16 @@
 # @twicpics/url
 
 [![NPM][npm-image]][npm-url]
+[![Node Version][node-image]][node-url]
 [![License][license-image]][license-url]
+
 [![Dependency Status][dependency-image]][dependency-url]
 [![devDependency Status][devDependency-image]][devDependency-url]
+[![Greenkeeper badge][greenkeeper-image]][greenkeeper-url]
 
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
-[![Greenkeeper badge][greenkeeper-image]][greenkeeper-url]
+[![Code Style][codestyle-image]][codestyle-url]
 
 `@twicpics/url` provides a simple yet expressive fluent API to generate [TwicPics](https://www.twicpics.com) URLs.
 
@@ -478,6 +481,8 @@ Shortcut for `format( "webp", quality )`.
 Copyright (c) 2018 [TwicPics](mailto:hello@twic.pics)
 Licensed under the [MIT license][license-url].
 
+[codestyle-image]: https://img.shields.io/badge/code%20style-creative--area-brightgreen.svg?style=flat-square
+[codestyle-url]: https://github.com/creative-area/eslint-config
 [coveralls-image]: https://img.shields.io/coveralls/TwicPics/url.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/TwicPics/url
 [dependency-image]: https://img.shields.io/david/TwicPics/url.svg?style=flat-square
@@ -488,6 +493,8 @@ Licensed under the [MIT license][license-url].
 [greenkeeper-url]: https://greenkeeper.io/
 [license-image]: https://img.shields.io/npm/l/@twicpics/url.svg?style=flat-square
 [license-url]: https://raw.githubusercontent.com/TwicPics/url/master/LICENSE
+[node-image]: https://img.shields.io/node/v/@twicpics/url.svg?style=flat-square
+[node-url]: https://npmjs.org/package/@twicpics/url
 [npm-image]: https://img.shields.io/npm/v/@twicpics/url.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@twicpics/url
 [travis-image]: https://img.shields.io/travis/TwicPics/url.svg?style=flat-square
