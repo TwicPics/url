@@ -1,7 +1,5 @@
 # @twicpics/url
 
-<img src="https://avatars3.githubusercontent.com/u/41468375?s=400" style="width: 20%; float: right; border-radius: 15%;" alt="TwicPics Logo"></img>
-
 [![NPM][npm-image]][npm-url]
 [![Node Version][node-image]][node-url]
 [![License][license-image]][license-url]
