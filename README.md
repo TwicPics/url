@@ -265,7 +265,7 @@ _focus( { x, y } )_
 Sets the focus point.
 
 ```js
-// These three lines sets the exact same focus point
+// These three lines set the exact same focus point
 builder.focus( "67x987" );
 builder.focus( 67, 987 );
 builder.focus( {
