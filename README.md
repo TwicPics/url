@@ -24,12 +24,12 @@ const onePassUrl = builder.cover( "1:1" ).resize( 700 ).src( SRC_URL ).url();
 
 // Pre-crop an image then apply different transformations to it
 const precrop = builder.src( SRC_URL ).focus( "25p", "71p" ).crop( 560, 280 );
-const squareUrl = precrop.cover( `1:1` ).url();
-const landscapeUrl = precrop.cover( `16:9` ).url();
+const squareUrl = precrop.cover( "1:1" ).url();
+const landscapeUrl = precrop.cover( "16:9" ).url();
 
 // Prepare manipulations to be applied to different sources
-const square = builder.cover( `1:1` ).resize( 300 );
-const landscape = builder.cover( `1:1` ).resize( 300 );
+const square = builder.cover( "1:1" ).resize( 300 );
+const landscape = builder.cover( "1:1" ).resize( 300 );
 
 const squaredUrl = square.src( SRC_URL ).url();
 const squaredPrecrop = square.src( precrop ).url();
@@ -54,7 +54,7 @@ If you wish to use the module client-side, then you'll have to use your favorite
 
 ```js
 // Get the builder
-const builder = require( `@twicpics/url` );
+const builder = require( "@twicpics/url" );
 
 // Use the builder
 const myFirstUrl = builder.src( MY_IMAGE_URL ).resize( 300 ).url();
@@ -63,7 +63,7 @@ const myFirstUrl = builder.src( MY_IMAGE_URL ).resize( 300 ).url();
 The builder's API is fluent and each method call returns a new immutable object. As such you can re-use an existing object and create a totally new and independent URL:
 
 ```js
-const authorizedAndSquared = builder.auth( MY_TOKEN ).cover( `1:1` );
+const authorizedAndSquared = builder.auth( MY_TOKEN ).cover( "1:1" );
 
 const url1 = authorizedAndSquared.src( MY_IMAGE_URL_1 ).url();
 const url2 = authorizedAndSquared.src( MY_IMAGE_URL_2 ).url();
