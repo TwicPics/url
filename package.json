@@ -6,7 +6,7 @@
     "devDependencies": {
         "coveralls": "3.0.2",
         "eslint": "5.2.0",
-        "eslint-config-creative-area": "0.8.0",
+        "eslint-config-creative-area": "0.9.0",
         "nodeunit": "0.11.3",
         "nyc": "12.0.2"
     },
