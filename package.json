@@ -5,16 +5,16 @@
     "description": "a library to build TwicPics URLs",
     "devDependencies": {
         "coveralls": "3.0.2",
-        "eslint": "5.2.0",
-        "eslint-config-creative-area": "0.8.0",
+        "eslint": "5.12.1",
+        "eslint-config-creative-area": "0.9.0",
         "nodeunit": "0.11.3",
-        "nyc": "12.0.2"
+        "nyc": "13.1.0"
     },
     "engines": {
-        "node": ">=8"
+        "node": ">=10"
     },
     "eslintConfig": {
-        "extends": "creative-area/es2017",
+        "extends": "creative-area/es2018",
         "env": {
             "node": true
         }
@@ -26,5 +26,5 @@
         "coveralls": "nyc report --reporter=text-lcov | coveralls",
         "test": "nyc node test"
     },
-    "version": "0.0.0"
+    "version": "0.1.0-pre"
 }

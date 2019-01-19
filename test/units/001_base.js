@@ -4,10 +4,12 @@ const url = require( `../..` );
 
 const tests = {};
 
+const rAuth = /auth:/;
+
 const addTest = ( method, expected, ...args ) => {
-    const testName = `${ method }(${ JSON.stringify( args ).slice( 1, -1 ) })`;
+    const testName = `url.${ method }(${ JSON.stringify( args ).slice( 1, -1 ) })`;
     if ( expected === Error ) {
-        tests[ testName ] = assert => {
+        tests[ `${ testName } => Error` ] = assert => {
             assert.expect( 1 );
             assert.throws( () => {
                 url[ method ]( ...args );
@@ -15,15 +17,24 @@ const addTest = ( method, expected, ...args ) => {
             assert.done();
         };
     } else {
-        // eslint-disable-next-line no-param-reassign
-        expected = `https://i.twic.pics/v1/${ expected }/<END>`;
-        tests[ testName ] = assert => {
+        const expectedClassic = `https://i.twic.pics/v1/${ expected ? `${ expected }/` : `` }http://<END>`;
+        tests[ `${ testName } - classic API => "${ expected }"` ] = assert => {
             assert.expect( 2 );
             const newUrl = url[ method ]( ...args );
             assert.notStrictEqual( url, newUrl, `call creates a new object` );
-            assert.strictEqual( newUrl.src( `<END>` ).url(), expected, expected );
+            assert.strictEqual( newUrl.src( `http://<END>` ).url(), expectedClassic, expectedClassic );
             assert.done();
         };
+        if ( !rAuth.test( expected ) ) {
+            const expectedCatchAll = `https://i.twic.pics/<END>${ expected ? `?v1/${ expected }` : `` }`;
+            tests[ `${ testName } - catch-all API => "${ expected }"` ] = assert => {
+                assert.expect( 2 );
+                const newUrl = url[ method ]( ...args );
+                assert.notStrictEqual( url, newUrl, `call creates a new object` );
+                assert.strictEqual( newUrl.src( `<END>` ).url(), expectedCatchAll, expectedCatchAll );
+                assert.done();
+            };
+        }
     }
 };
 
@@ -31,33 +42,24 @@ addTest( `auth`, `auth:aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa`, `aaaaaaaa-aaaa-4aa
 addTest( `auth`, Error, `not-a-valid-token` );
 addTest( `auth`, Error );
 
-addTest( `format`, `format=jpeg`, `jpeg` );
-addTest( `format`, `format=jpeg`, {
-    "type": `jpeg`,
-} );
-addTest( `format`, `format=jpeg-80`, `jpeg`, 80 );
-addTest( `format`, `format=jpeg-80`, {
-    "quality": 80,
-    "type": `jpeg`,
-} );
-addTest( `format`, `format=png`, `png` );
-addTest( `format`, `format=png`, {
-    "type": `png`,
-} );
-addTest( `format`, Error, `png`, 80 );
-addTest( `format`, Error, {
-    "quality": 80,
-    "type": `png`,
-} );
-addTest( `format`, `format=webp`, `webp` );
-addTest( `format`, `format=webp`, {
-    "type": `webp`,
-} );
-addTest( `format`, `format=webp-80`, `webp`, 80 );
-addTest( `format`, `format=webp-80`, {
-    "quality": 80,
-    "type": `webp`,
-} );
+for ( const format of [ `jpeg`, `png`, `webp` ] ) {
+    addTest( `format`, `format=${ format }`, format );
+    addTest( `format`, `format=${ format }`, {
+        "type": format,
+    } );
+    addTest( `format`, `quality=80/format=${ format }`, format, 80 );
+    addTest( `format`, `quality=80/format=${ format }`, {
+        "quality": 80,
+        "type": format,
+    } );
+    addTest( format, `format=${ format }` );
+    addTest( format, `quality=80/format=${ format }`, 80 );
+    addTest( `format`, Error, format, 0 );
+    addTest( `format`, Error, format, 101 );
+    addTest( format, Error, 0 );
+    addTest( format, Error, 101 );
+}
+
 addTest( `format`, Error, `unknown` );
 addTest( `format`, Error, {
     "type": `unknown`,
@@ -69,14 +71,21 @@ addTest( `format`, Error, {
     "quality": 80,
 } );
 
-addTest( `jpeg`, `format=jpeg` );
-addTest( `jpeg`, `format=jpeg-80`, 80 );
-addTest( `png`, `format=png` );
-addTest( `png`, `format=png`, 80 );
-addTest( `webp`, `format=webp` );
-addTest( `webp`, `format=webp-80`, 80 );
-
 const rUnCamel = /[A-Z]/g;
+
+for ( const qualityMethod of [ `quality`, `qualityMax`, `qualityMin` ] ) {
+    const nameInUrl = qualityMethod.replace( rUnCamel, letter => `-${ letter.toLowerCase() }` );
+    addTest( qualityMethod, `${ nameInUrl }=25`, 25 );
+    addTest( qualityMethod, `${ nameInUrl }=30`, `30` );
+    addTest( qualityMethod, Error );
+    addTest( qualityMethod, Error, false );
+    addTest( qualityMethod, Error, 0 );
+    addTest( qualityMethod, Error, `0` );
+    addTest( qualityMethod, Error, 20.3 );
+    addTest( qualityMethod, Error, `20.3` );
+    addTest( qualityMethod, Error, 101 );
+    addTest( qualityMethod, Error, `101` );
+}
 
 for ( const resizer of [
     `contain`,
@@ -178,6 +187,23 @@ addTest( `focus`, `focus=XxY`, {
 } );
 addTest( `focus`, Error );
 addTest( `focus`, Error, {} );
+
+const str = len => ( new Array( len + 1 ).join( `a` ) );
+
+addTest( `host`, Error );
+addTest( `host`, Error, 25 );
+addTest( `host`, Error, `à` );
+addTest( `host`, Error, `http://à` );
+addTest( `host`, Error, `ftp://localhost` );
+addTest( `host`, Error, str( 64 ) );
+const max = str( 63 );
+addTest( `host`, Error, [ max, max, max, str( 62 ) ].join( `.` ) );
+addTest( `host`, Error, `a:65536` );
+addTest( `host`, ``, `i.twic.pics` );
+addTest( `host`, ``, `https://i.twic.pics` );
+
+addTest( `src`, Error );
+addTest( `src`, Error, 15 );
 
 addTest( `url`, Error );
 
