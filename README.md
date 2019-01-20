@@ -1,3 +1,8 @@
+<img
+    align="right"
+    height="120"
+    src="https://avatars3.githubusercontent.com/u/41468375?s=120">
+
 # @twicpics/url
 
 [![NPM Version][npm-image]][npm-url]
