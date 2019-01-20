@@ -1,6 +1,6 @@
 <img
     align="right"
-    height="120"
+    height="200"
     src="logo.png">
 
 # @twicpics/url
