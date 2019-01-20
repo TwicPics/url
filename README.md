@@ -1,15 +1,17 @@
 # @twicpics/url
 
-[![NPM][npm-image]][npm-url]
+[![NPM Version][npm-image]][npm-url]
 [![Node Version][node-image]][node-url]
 [![License][license-image]][license-url]
 
-[![Dependency Status][dependency-image]][dependency-url]
-[![devDependency Status][devDependency-image]][devDependency-url]
-[![Greenkeeper badge][greenkeeper-image]][greenkeeper-url]
-
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
+[![Greenkeeper Status][greenkeeper-image]][greenkeeper-url]
+
+[![Dependencies Status][dependency-image]][dependency-url]
+[![devDependencies Status][devDependency-image]][devDependency-url]
+
+[![Code quality][quality-image]][quality-url]
 [![Code Style][codestyle-image]][codestyle-url]
 
 `@twicpics/url` provides a simple yet expressive fluent API to generate [TwicPics](https://www.twicpics.com) URLs.
@@ -478,8 +480,7 @@ Shortcut for `format( "webp", quality )`.
 
 ## License
 
-Copyright (c) 2018 [TwicPics](mailto:hello@twic.pics)
-Licensed under the [MIT license][license-url].
+© [TwicPics](mailto:hello@twic.pics), 2018-2019 – licensed under the [MIT license][license-url].
 
 [codestyle-image]: https://img.shields.io/badge/code%20style-creative--area-brightgreen.svg?style=flat-square
 [codestyle-url]: https://github.com/creative-area/eslint-config
@@ -489,7 +490,7 @@ Licensed under the [MIT license][license-url].
 [dependency-url]: https://david-dm.org/TwicPics/url
 [devDependency-image]: https://img.shields.io/david/dev/TwicPics/url.svg?style=flat-square
 [devDependency-url]: https://david-dm.org/TwicPics/url?type=dev
-[greenkeeper-image]: https://badges.greenkeeper.io/TwicPics/url.svg
+[greenkeeper-image]: https://badges.greenkeeper.io/TwicPics/url.svg?style=flat-square
 [greenkeeper-url]: https://greenkeeper.io/
 [license-image]: https://img.shields.io/npm/l/@twicpics/url.svg?style=flat-square
 [license-url]: https://raw.githubusercontent.com/TwicPics/url/master/LICENSE
@@ -497,5 +498,7 @@ Licensed under the [MIT license][license-url].
 [node-url]: https://npmjs.org/package/@twicpics/url
 [npm-image]: https://img.shields.io/npm/v/@twicpics/url.svg?style=flat-square
 [npm-url]: https://npmjs.org/package/@twicpics/url
+[quality-image]: https://img.shields.io/lgtm/grade/javascript/g/TwicPics/url.svg?style=flat-square&logo=lgtm&logoWidth=18
+[quality-url]: https://lgtm.com/projects/g/TwicPics/url/context:javascript
 [travis-image]: https://img.shields.io/travis/TwicPics/url.svg?style=flat-square
 [travis-url]: https://travis-ci.org/TwicPics/url
