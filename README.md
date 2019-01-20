@@ -1,7 +1,7 @@
 <img
     align="right"
     height="120"
-    src="https://avatars3.githubusercontent.com/u/41468375?s=120">
+    src="logo.png">
 
 # @twicpics/url
 
