@@ -1,7 +1,4 @@
-<img
-    align="right"
-    height="200"
-    src="logo.png">
+<img align="right" height="25%" src="logo.png">
 
 # @twicpics/url
 
