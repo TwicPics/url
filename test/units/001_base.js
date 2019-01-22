@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 "use strict";
 
 const url = require( `../..` );
@@ -213,5 +214,57 @@ addTest( `src`, Error );
 addTest( `src`, Error, 15 );
 
 addTest( `url`, Error );
+
+Object.assign( tests, {
+    "path starts with v1": assert => {
+        assert.expect( 8 );
+        assert.strictEqual( url.src( `v1-` ).url(), `https://i.twic.pics/v1-` );
+        assert.strictEqual( url.src( `V1-` ).url(), `https://i.twic.pics/V1-` );
+        assert.strictEqual( url.src( `v1` ).url(), `https://i.twic.pics/v1/image:v1` );
+        assert.strictEqual( url.src( `v1/` ).url(), `https://i.twic.pics/v1/image:v1/` );
+        assert.strictEqual( url.src( `v1/image` ).url(), `https://i.twic.pics/v1/image:v1/image` );
+        assert.strictEqual( url.src( `V1` ).url(), `https://i.twic.pics/v1/image:V1` );
+        assert.strictEqual( url.src( `V1/` ).url(), `https://i.twic.pics/v1/image:V1/` );
+        assert.strictEqual( url.src( `V1/image` ).url(), `https://i.twic.pics/v1/image:V1/image` );
+        assert.done();
+    },
+    "query starts with v1": assert => {
+        assert.expect( 16 );
+        assert.strictEqual( url.src( `path?v1-` ).url(), `https://i.twic.pics/path?v1-` );
+        assert.strictEqual( url.src( `path?V1-` ).url(), `https://i.twic.pics/path?V1-` );
+        assert.strictEqual( url.src( `?v1-` ).url(), `https://i.twic.pics/?v1-` );
+        assert.strictEqual( url.src( `?V1-` ).url(), `https://i.twic.pics/?V1-` );
+        assert.strictEqual( url.src( `path?v1` ).url(), `https://i.twic.pics/v1/image:path?v1` );
+        assert.strictEqual( url.src( `path?v1/` ).url(), `https://i.twic.pics/v1/image:path?v1/` );
+        assert.strictEqual( url.src( `path?v1/image` ).url(), `https://i.twic.pics/v1/image:path?v1/image` );
+        assert.strictEqual( url.src( `?v1` ).url(), `https://i.twic.pics/v1/image:?v1` );
+        assert.strictEqual( url.src( `?v1/` ).url(), `https://i.twic.pics/v1/image:?v1/` );
+        assert.strictEqual( url.src( `?v1/image` ).url(), `https://i.twic.pics/v1/image:?v1/image` );
+        assert.strictEqual( url.src( `path?V1` ).url(), `https://i.twic.pics/v1/image:path?V1` );
+        assert.strictEqual( url.src( `path?V1/` ).url(), `https://i.twic.pics/v1/image:path?V1/` );
+        assert.strictEqual( url.src( `path?V1/image` ).url(), `https://i.twic.pics/v1/image:path?V1/image` );
+        assert.strictEqual( url.src( `?V1` ).url(), `https://i.twic.pics/v1/image:?V1` );
+        assert.strictEqual( url.src( `?V1/` ).url(), `https://i.twic.pics/v1/image:?V1/` );
+        assert.strictEqual( url.src( `?V1/image` ).url(), `https://i.twic.pics/v1/image:?V1/image` );
+        assert.done();
+    },
+    "query starts with v1 with manipulation": assert => {
+        assert.expect( 12 );
+        const tmp = url.resize( 300 );
+        assert.strictEqual( tmp.src( `path?v1` ).url(), `https://i.twic.pics/path?v1/resize=300?v1` );
+        assert.strictEqual( tmp.src( `path?v1/` ).url(), `https://i.twic.pics/path?v1/resize=300?v1/` );
+        assert.strictEqual( tmp.src( `path?v1/image` ).url(), `https://i.twic.pics/path?v1/resize=300?v1/image` );
+        assert.strictEqual( tmp.src( `?v1` ).url(), `https://i.twic.pics/?v1/resize=300?v1` );
+        assert.strictEqual( tmp.src( `?v1/` ).url(), `https://i.twic.pics/?v1/resize=300?v1/` );
+        assert.strictEqual( tmp.src( `?v1/image` ).url(), `https://i.twic.pics/?v1/resize=300?v1/image` );
+        assert.strictEqual( tmp.src( `path?V1` ).url(), `https://i.twic.pics/path?v1/resize=300?V1` );
+        assert.strictEqual( tmp.src( `path?V1/` ).url(), `https://i.twic.pics/path?v1/resize=300?V1/` );
+        assert.strictEqual( tmp.src( `path?V1/image` ).url(), `https://i.twic.pics/path?v1/resize=300?V1/image` );
+        assert.strictEqual( tmp.src( `?V1` ).url(), `https://i.twic.pics/?v1/resize=300?V1` );
+        assert.strictEqual( tmp.src( `?V1/` ).url(), `https://i.twic.pics/?v1/resize=300?V1/` );
+        assert.strictEqual( tmp.src( `?V1/image` ).url(), `https://i.twic.pics/?v1/resize=300?V1/image` );
+        assert.done();
+    },
+} );
 
 module.exports = tests;
