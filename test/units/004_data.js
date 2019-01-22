@@ -55,8 +55,28 @@ addTests( `dataSrc`, [
 addTests( `dataTransform`, [
     [ `nothing`, () => url, `` ],
     [ `resize`, () => url.resize( 300 ), `resize=300` ],
+    [ `background`, () => url.background( `<color>` ), `background=<color>` ],
     [ `format`, () => url.png(), `format=png` ],
+    [ `background & resize`, () => url.background( `<color>` ).resize( 300 ), `resize=300/background=<color>` ],
     [ `format & resize`, () => url.png().resize( 300 ), `resize=300/format=png` ],
+    [
+        `background, format & resize`,
+        () =>
+            url
+                .background( `<color>` )
+                .png()
+                .resize( 300 ),
+        `resize=300/background=<color>/format=png`,
+    ],
+    [
+        `format, background & resize`,
+        () =>
+            url
+                .png()
+                .background( `<color>` )
+                .resize( 300 ),
+        `resize=300/background=<color>/format=png`,
+    ],
     [ `focus first (-)`, () => url.focus( 30, 40 ), `` ],
     [ `focus first (true)`, () => url.focus( 30, 40 ), `focus=30x40`, true ],
     [ `focus second (-)`, () => url.resize( 300 ).focus( 30, 40 ), `resize=300/focus=30x40` ],

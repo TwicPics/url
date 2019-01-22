@@ -5,10 +5,12 @@ const url = require( `../..` );
 const tests = {};
 
 const rAuth = /auth:/;
+const rHost = /^([^:]+:\/\/)?/;
+const rQuery = /^([^?]*)(\?.*)?$/;
 
-const addTest = ( method, expected, ...args ) => {
-    const testName = `url.${ method }(${ JSON.stringify( args ).slice( 1, -1 ) })`;
-    if ( expected === Error ) {
+const addTest = ( method, _expected, ...args ) => {
+    const testName = method ? `url.${ method }(${ JSON.stringify( args ).slice( 1, -1 ) })` : _expected;
+    if ( _expected === Error ) {
         tests[ `${ testName } => Error` ] = assert => {
             assert.expect( 1 );
             assert.throws( () => {
@@ -17,59 +19,63 @@ const addTest = ( method, expected, ...args ) => {
             assert.done();
         };
     } else {
-        const expectedClassic = `https://i.twic.pics/v1/${ expected ? `${ expected }/` : `` }http://<END>`;
-        tests[ `${ testName } - classic API => "${ expected }"` ] = assert => {
+        const [ , expected, query = `` ] = rQuery.exec( _expected );
+        const host =
+            ( ( method === `host` ) ? args[ 0 ] : `i.twic.pics` ).replace( rHost, ( _, p ) => p || `https://` );
+        const expectedClassic = `${ host }/v1/${ expected ? `${ expected }/` : `` }http://URL${ query }`;
+        tests[ `${ testName } - classic API => "${ expectedClassic }"` ] = assert => {
             assert.expect( 2 );
-            const newUrl = url[ method ]( ...args );
+            const newUrl = method ? url[ method ]( ...args ) : url.src( `<tmp>` );
             assert.notStrictEqual( url, newUrl, `call creates a new object` );
-            assert.strictEqual( newUrl.src( `http://<END>` ).url(), expectedClassic, expectedClassic );
+            assert.strictEqual( newUrl.src( `http://URL${ query }` ).url(), expectedClassic, expectedClassic );
             assert.done();
         };
         if ( !rAuth.test( expected ) ) {
-            const expectedCatchAll = `https://i.twic.pics/<END>${ expected ? `?v1/${ expected }` : `` }`;
-            tests[ `${ testName } - catch-all API => "${ expected }"` ] = assert => {
+            const expectedCatchAll = `${ host }/PATH${ expected ? `?v1/${ expected }` : `` }${ query }`;
+            tests[ `${ testName } - catch-all API => "${ expectedCatchAll }"` ] = assert => {
                 assert.expect( 2 );
-                const newUrl = url[ method ]( ...args );
+                const newUrl = method ? url[ method ]( ...args ) : url.src( `<tmp>` );
                 assert.notStrictEqual( url, newUrl, `call creates a new object` );
-                assert.strictEqual( newUrl.src( `<END>` ).url(), expectedCatchAll, expectedCatchAll );
+                assert.strictEqual( newUrl.src( `PATH${ query }` ).url(), expectedCatchAll, expectedCatchAll );
                 assert.done();
             };
+            if ( query ) {
+                const expectedCatchAllNP = `${ host }/${ expected ? `?v1/${ expected }` : `` }${ query }`;
+                tests[ `${ testName } - catch-all API => "${ expectedCatchAllNP }"` ] = assert => {
+                    assert.expect( 2 );
+                    const newUrl = method ? url[ method ]( ...args ) : url.src( `<tmp>` );
+                    assert.notStrictEqual( url, newUrl, `call creates a new object` );
+                    assert.strictEqual( newUrl.src( query ).url(), expectedCatchAllNP, expectedCatchAllNP );
+                    assert.done();
+                };
+            }
         }
     }
 };
+
+addTest( false, `?y=10` );
 
 addTest( `auth`, `auth:aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa`, `aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa` );
 addTest( `auth`, Error, `not-a-valid-token` );
 addTest( `auth`, Error );
 
+addTest( `background`, Error, false );
+addTest( `background`, Error, true );
+addTest( `background`, Error, 0 );
+addTest( `background`, Error, `` );
+addTest( `background`, ``, null );
+
+addTest( `format`, Error );
+addTest( `format`, Error, true );
+addTest( `format`, Error, false );
+addTest( `format`, Error, `unknown` );
+addTest( `format`, ``, null );
+addTest( `format`, ``, undefined );
+
 for ( const format of [ `jpeg`, `png`, `webp` ] ) {
     addTest( `format`, `format=${ format }`, format );
-    addTest( `format`, `format=${ format }`, {
-        "type": format,
-    } );
-    addTest( `format`, `quality=80/format=${ format }`, format, 80 );
-    addTest( `format`, `quality=80/format=${ format }`, {
-        "quality": 80,
-        "type": format,
-    } );
     addTest( format, `format=${ format }` );
-    addTest( format, `quality=80/format=${ format }`, 80 );
-    addTest( `format`, Error, format, 0 );
-    addTest( `format`, Error, format, 101 );
-    addTest( format, Error, 0 );
-    addTest( format, Error, 101 );
 }
-
-addTest( `format`, Error, `unknown` );
-addTest( `format`, Error, {
-    "type": `unknown`,
-} );
-addTest( `format`, Error );
-addTest( `format`, Error, {} );
-addTest( `format`, Error, null, 80 );
-addTest( `format`, Error, {
-    "quality": 80,
-} );
 
 const rUnCamel = /[A-Z]/g;
 
@@ -199,8 +205,9 @@ addTest( `host`, Error, str( 64 ) );
 const max = str( 63 );
 addTest( `host`, Error, [ max, max, max, str( 62 ) ].join( `.` ) );
 addTest( `host`, Error, `a:65536` );
-addTest( `host`, ``, `i.twic.pics` );
-addTest( `host`, ``, `https://i.twic.pics` );
+addTest( `host`, ``, `sub.twic.pics` );
+addTest( `host`, ``, `http://sub.twic.pics` );
+addTest( `host`, ``, `localhost:666` );
 
 addTest( `src`, Error );
 addTest( `src`, Error, 15 );
