@@ -100,7 +100,7 @@ square500.src( precop ).url();
 
 ### auth
 
-_auth( AUTHENTICATION_TOKEN )_
+_auth( &lt;token&gt; )_
 
 Adds an authentication token.
 
@@ -301,6 +301,25 @@ Accepted types are `"jpeg"`, `"png"` and `"webp"`.
 builder.format( "webp" );
 ```
 
+### host
+
+_host( &lt;location&gt; )_
+
+Sets the TwicPics instance that is to be requested.
+
+By default, the builder will target `https://i.twic.pics`. Use `host()` to specify another location.
+
+If no protocol is specified, the builder will default to `https://`.
+
+```js
+// Target http://my-company.twic.pics
+builder.host( "http://my-company.twic.pics" );
+
+// Target https://my-brand.twic.pics
+builder.host( "my-brand.twic.pics" );
+builder.host( "https://my-brand.twic.pics" );
+```
+
 ### jpeg
 
 _jpeg()_
@@ -362,35 +381,40 @@ Specifies the placeholder on which the current manipulation has to be performed.
 Any call down the line to `placeholder()` or `src()` after a call to `placeholder()` will result in an exception.
 
 ```js
-// for placeholder:auto
+// placeholder:auto
 builder.placeholder();
-// for placeholder:blue
+
+// placeholder:blue
 builder.placeholder( "blue" ); 
 builder.placeholder( null, null, "blue" ); 
 builder.placeholder( {
     "background": "blue",
 } );
-// for placeholder:white/auto
+
+// placeholder:white/auto
 builder.placeholder( "white/auto" );
 builder.placeholder( null, null, "white/auto" );
 builder.placeholder( null, null, null, "white" ); 
 builder.placeholder( {
     "text": "white",
 } );
-// for placeholder:400x300
+
+// placeholder:400x300
 builder.placeholder( 400, 300 ); 
 builder.placeholder( {
     "width": 400,
     "height": 300,
 } );
-// for placeholder:black/red
+
+// placeholder:black/red
 builder.placeholder( "black/red" );
 builder.placeholder( null, null, "red", "black" );
 builder.placeholder( {
     "background": "red",
     "text": "black",
 } );
-// for placeholder:400x300:black/red
+
+// placeholder:400x300:black/red
 builder.placeholder( "400x300:black/red" );
 builder.placeholder( 400, 300, "black/red" );
 builder.placeholder( 400, 300, "red", "black" );
