@@ -108,6 +108,17 @@ Adds an authentication token.
 builder.auth( "aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa" );
 ```
 
+
+### background
+
+_background( &lt;color&gt; )_
+
+Sets the image background. This will show behind translucent pixels using alpha blending.
+
+```js
+builder.background( `red` );
+```
+
 ### contain
 
 _contain( &lt;expr&gt; )_
@@ -280,28 +291,21 @@ builder.focus( {
 
 ### format
 
-_format( &lt;type&gt; [, &lt;quality&gt; ] )_
-
-_format( { type, quality } )_
+_format( &lt;type&gt; )_
 
 Sets the image format.
 
-Accepted types are `"jpeg"`, `"png"` and `"webp"`. Only `jpeg` and `webp` accept a quality value.
+Accepted types are `"jpeg"`, `"png"` and `"webp"`.
 
 ```js
-builder.format( "jpeg", 45 );
-builder.format( "png" );
-builder.format( {
-    type: "webp",
-    quality: 80,
-} );
+builder.format( "webp" );
 ```
 
 ### jpeg
 
-_jpeg( [ &lt;quality&gt; ] )_
+_jpeg()_
 
-Shortcut for `format( "jpeg", quality )`.
+Shortcut for `format( "jpeg" )`.
 
 ### max
 
@@ -343,11 +347,102 @@ builder.min( {
 } );
 ```
 
+### placeholder
+
+_placeholder( [ &lt;expression&gt; ] )_
+
+_placeholder( [ &lt;width&gt;, &lt;height&gt; ] [, &lt;background&gt; [, &lt;text&gt; ] ] )_
+
+_placeholder( [ &lt;width&gt;, &lt;height&gt; ] [, &lt;colorExpression&gt; ] )_
+
+_placeholder( { [ &lt;width&gt;, &lt;height&gt; ] [, &lt;background&gt; [, &lt;text&gt; ] ] } )_
+
+Specifies the placeholder on which the current manipulation has to be performed.
+
+Any call down the line to `placeholder()` or `src()` after a call to `placeholder()` will result in an exception.
+
+```js
+// for placeholder:auto
+builder.placeholder();
+// for placeholder:blue
+builder.placeholder( "blue" ); 
+builder.placeholder( null, null, "blue" ); 
+builder.placeholder( {
+    "background": "blue",
+} );
+// for placeholder:white/auto
+builder.placeholder( "white/auto" );
+builder.placeholder( null, null, "white/auto" );
+builder.placeholder( null, null, null, "white" ); 
+builder.placeholder( {
+    "text": "white",
+} );
+// for placeholder:400x300
+builder.placeholder( 400, 300 ); 
+builder.placeholder( {
+    "width": 400,
+    "height": 300,
+} );
+// for placeholder:black/red
+builder.placeholder( "black/red" );
+builder.placeholder( null, null, "red", "black" );
+builder.placeholder( {
+    "background": "red",
+    "text": "black",
+} );
+// for placeholder:400x300:black/red
+builder.placeholder( "400x300:black/red" );
+builder.placeholder( 400, 300, "black/red" );
+builder.placeholder( 400, 300, "red", "black" );
+builder.placeholder( {
+    "width": 400,
+    "height": 300,
+    "background": "red",
+    "text": "black",
+} );
+```
+
 ### png
 
 _png()_
 
 Shortcut for `format( "png" )`.
+
+### quality
+
+_quality( &lt;level&gt; )_
+
+Sets the image quality.
+
+`level` must be between `1` & `100`. Please note that the PNG format does not take quality into account for now.
+
+```js
+builder.quality( 20 );
+```
+
+### qualityMax
+
+_qualityMax( &lt;level&gt; )_
+
+Sets the maximum image quality.
+
+`level` must be between `1` & `100`. Please note that the PNG format does not take quality into account for now.
+
+```js
+builder.qualityMax( 80 );
+```
+
+### qualityMin
+
+_qualityMin( &lt;level&gt; )_
+
+Sets the minimum image quality.
+
+`level` must be between `1` & `100`. Please note that the PNG format does not take quality into account for now.
+
+```js
+builder.qualityMin( 50 );
+```
 
 ### resize
 
@@ -476,9 +571,9 @@ Alias of `toString`.
 
 ### webp
 
-_webp( [ &lt;quality&gt; ] )_
+_webp()_
 
-Shortcut for `format( "webp", quality )`.
+Shortcut for `format( "webp" )`.
 
 ## License
 

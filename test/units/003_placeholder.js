@@ -69,7 +69,7 @@ module.exports = {
         assert.done();
     },
     "size": assert => {
-        assert.expect( 9 );
+        assert.expect( 10 );
         assert.throws( () => url.placeholder( 400 ) );
         assert.throws( () => url.placeholder( 400, null ) );
         assert.throws( () => url.placeholder( null, 300 ) );
@@ -89,6 +89,12 @@ module.exports = {
         } ) );
         assert.strictEqual(
             url
+                .placeholder( `400x300` )
+                .url(),
+            `https://i.twic.pics/v1/placeholder:400x300`
+        );
+        assert.strictEqual(
+            url
                 .placeholder( 400, 300 )
                 .url(),
             `https://i.twic.pics/v1/placeholder:400x300`
@@ -105,7 +111,7 @@ module.exports = {
         assert.done();
     },
     "color": assert => {
-        assert.expect( 8 );
+        assert.expect( 12 );
         assert.strictEqual(
             url
                 .placeholder( null, null, null )
@@ -117,6 +123,12 @@ module.exports = {
                 .placeholder( null, null )
                 .url(),
             `https://i.twic.pics/v1/placeholder:auto`
+        );
+        assert.strictEqual(
+            url
+                .placeholder( `red` )
+                .url(),
+            `https://i.twic.pics/v1/placeholder:red`
         );
         assert.strictEqual(
             url
@@ -134,6 +146,12 @@ module.exports = {
         );
         assert.strictEqual(
             url
+                .placeholder( `black/auto` )
+                .url(),
+            `https://i.twic.pics/v1/placeholder:black/auto`
+        );
+        assert.strictEqual(
+            url
                 .placeholder( null, null, null, `black` )
                 .url(),
             `https://i.twic.pics/v1/placeholder:black/auto`
@@ -145,6 +163,18 @@ module.exports = {
                 } )
                 .url(),
             `https://i.twic.pics/v1/placeholder:black/auto`
+        );
+        assert.strictEqual(
+            url
+                .placeholder( `black/red` )
+                .url(),
+            `https://i.twic.pics/v1/placeholder:black/red`
+        );
+        assert.strictEqual(
+            url
+                .placeholder( null, null, `black/red` )
+                .url(),
+            `https://i.twic.pics/v1/placeholder:black/red`
         );
         assert.strictEqual(
             url
@@ -164,7 +194,13 @@ module.exports = {
         assert.done();
     },
     "both": assert => {
-        assert.expect( 6 );
+        assert.expect( 11 );
+        assert.strictEqual(
+            url
+                .placeholder( `400x300:red` )
+                .url(),
+            `https://i.twic.pics/v1/placeholder:400x300:red`
+        );
         assert.strictEqual(
             url
                 .placeholder( 400, 300, `red` )
@@ -183,6 +219,18 @@ module.exports = {
         );
         assert.strictEqual(
             url
+                .placeholder( `400x300:black/auto` )
+                .url(),
+            `https://i.twic.pics/v1/placeholder:400x300:black/auto`
+        );
+        assert.strictEqual(
+            url
+                .placeholder( 400, 300, `black/auto` )
+                .url(),
+            `https://i.twic.pics/v1/placeholder:400x300:black/auto`
+        );
+        assert.strictEqual(
+            url
                 .placeholder( 400, 300, null, `black` )
                 .url(),
             `https://i.twic.pics/v1/placeholder:400x300:black/auto`
@@ -196,6 +244,18 @@ module.exports = {
                 } )
                 .url(),
             `https://i.twic.pics/v1/placeholder:400x300:black/auto`
+        );
+        assert.strictEqual(
+            url
+                .placeholder( `400x300:black/red` )
+                .url(),
+            `https://i.twic.pics/v1/placeholder:400x300:black/red`
+        );
+        assert.strictEqual(
+            url
+                .placeholder( 400, 300, `black/red` )
+                .url(),
+            `https://i.twic.pics/v1/placeholder:400x300:black/red`
         );
         assert.strictEqual(
             url
