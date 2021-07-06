@@ -251,18 +251,18 @@ Object.assign( tests, {
     "query starts with v1 with manipulation": assert => {
         assert.expect( 12 );
         const tmp = url.resize( 300 );
-        assert.strictEqual( tmp.src( `path?v1` ).url(), `https://i.twic.pics/path?v1/resize=300?v1` );
-        assert.strictEqual( tmp.src( `path?v1/` ).url(), `https://i.twic.pics/path?v1/resize=300?v1/` );
-        assert.strictEqual( tmp.src( `path?v1/image` ).url(), `https://i.twic.pics/path?v1/resize=300?v1/image` );
-        assert.strictEqual( tmp.src( `?v1` ).url(), `https://i.twic.pics/?v1/resize=300?v1` );
-        assert.strictEqual( tmp.src( `?v1/` ).url(), `https://i.twic.pics/?v1/resize=300?v1/` );
-        assert.strictEqual( tmp.src( `?v1/image` ).url(), `https://i.twic.pics/?v1/resize=300?v1/image` );
-        assert.strictEqual( tmp.src( `path?V1` ).url(), `https://i.twic.pics/path?v1/resize=300?V1` );
-        assert.strictEqual( tmp.src( `path?V1/` ).url(), `https://i.twic.pics/path?v1/resize=300?V1/` );
-        assert.strictEqual( tmp.src( `path?V1/image` ).url(), `https://i.twic.pics/path?v1/resize=300?V1/image` );
-        assert.strictEqual( tmp.src( `?V1` ).url(), `https://i.twic.pics/?v1/resize=300?V1` );
-        assert.strictEqual( tmp.src( `?V1/` ).url(), `https://i.twic.pics/?v1/resize=300?V1/` );
-        assert.strictEqual( tmp.src( `?V1/image` ).url(), `https://i.twic.pics/?v1/resize=300?V1/image` );
+        assert.strictEqual( tmp.src( `path?v1` ).url(), `https://i.twic.pics/path?v1/resize=300&v1` );
+        assert.strictEqual( tmp.src( `path?v1/` ).url(), `https://i.twic.pics/path?v1/resize=300&v1/` );
+        assert.strictEqual( tmp.src( `path?v1/image` ).url(), `https://i.twic.pics/path?v1/resize=300&v1/image` );
+        assert.strictEqual( tmp.src( `?v1` ).url(), `https://i.twic.pics/?v1/resize=300&v1` );
+        assert.strictEqual( tmp.src( `?v1/` ).url(), `https://i.twic.pics/?v1/resize=300&v1/` );
+        assert.strictEqual( tmp.src( `?v1/image` ).url(), `https://i.twic.pics/?v1/resize=300&v1/image` );
+        assert.strictEqual( tmp.src( `path?V1` ).url(), `https://i.twic.pics/path?v1/resize=300&V1` );
+        assert.strictEqual( tmp.src( `path?V1/` ).url(), `https://i.twic.pics/path?v1/resize=300&V1/` );
+        assert.strictEqual( tmp.src( `path?V1/image` ).url(), `https://i.twic.pics/path?v1/resize=300&V1/image` );
+        assert.strictEqual( tmp.src( `?V1` ).url(), `https://i.twic.pics/?v1/resize=300&V1` );
+        assert.strictEqual( tmp.src( `?V1/` ).url(), `https://i.twic.pics/?v1/resize=300&V1/` );
+        assert.strictEqual( tmp.src( `?V1/image` ).url(), `https://i.twic.pics/?v1/resize=300&V1/image` );
         assert.done();
     },
 } );
