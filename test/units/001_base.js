@@ -77,6 +77,28 @@ addTest( `dpr`, Error, Number.NEGATIVE_INFINITY );
 addTest( `dpr`, Error, Number.POSITIVE_INFINITY );
 addTest( `dpr`, `dpr=2`, 2 );
 
+addTest( `flip`, Error );
+addTest( `flip`, Error, false );
+addTest( `flip`, Error, true );
+addTest( `flip`, Error, 0 );
+addTest( `flip`, Error, `` );
+addTest( `flip`, Error, null );
+addTest( `flip`, `flip=both`, `both` );
+addTest( `flip`, `flip=x`, `x` );
+addTest( `flip`, `flip=y`, `y` );
+
+addTest( `turn`, Error );
+addTest( `turn`, ``, 0 );
+addTest( `turn`, ``, `` );
+addTest( `turn`, ``, null );
+addTest( `turn`, Error, NaN );
+addTest( `turn`, Error, Number.NEGATIVE_INFINITY );
+addTest( `turn`, Error, Number.POSITIVE_INFINITY );
+addTest( `turn`, `turn=60`, 60 );
+addTest( `turn`, `turn=flip`, `flip` );
+addTest( `turn`, `turn=left`, `left` );
+addTest( `turn`, `turn=right`, `right` );
+
 addTest( `output`, Error );
 addTest( `output`, Error, true );
 addTest( `output`, Error, false );

@@ -290,6 +290,21 @@ Specifies the image DPR.
 builder.dpr( 2 );
 ```
 
+### flip
+
+_flip( &lt;axis&gt; )_
+
+Creates a flip transformation.
+
+```js
+// On both axis
+builder.flip( "both" );
+// On the x axis
+builder.flip( "x" );
+// On the y axis
+builder.flip( "y" );
+```
+
 ### focus
 
 _focus( &lt;expr&gt; )_
@@ -628,6 +643,24 @@ Generates the URL as a string. Note that you must have provided an image URL usi
 ```js
 builder.toString(); // throws an exception
 builder.src( MY_IMAGE_URL ).toString(); // works
+```
+
+### turn
+
+_turn( &lt;angle&gt; )_
+
+_turn( &lt;direction&gt; )_
+
+Creates a turn transformation.
+
+```js
+// Using angles
+builder.turn( 90 );
+builder.turn( -90 );
+// Using directions
+builder.turn( "flip" );
+builder.turn( "left" );
+builder.turn( "right" );
 ```
 
 ### url
