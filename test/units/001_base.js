@@ -66,6 +66,17 @@ addTest( `background`, Error, 0 );
 addTest( `background`, Error, `` );
 addTest( `background`, ``, null );
 
+addTest( `dpr`, Error );
+addTest( `dpr`, Error, false );
+addTest( `dpr`, Error, true );
+addTest( `dpr`, Error, 0 );
+addTest( `dpr`, Error, `` );
+addTest( `dpr`, Error, null );
+addTest( `dpr`, Error, NaN );
+addTest( `dpr`, Error, Number.NEGATIVE_INFINITY );
+addTest( `dpr`, Error, Number.POSITIVE_INFINITY );
+addTest( `dpr`, `dpr=2`, 2 );
+
 addTest( `output`, Error );
 addTest( `output`, Error, true );
 addTest( `output`, Error, false );

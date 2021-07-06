@@ -280,6 +280,16 @@ builder.crop( {
 } );
 ```
 
+### dpr
+
+_dpr( &lt;number&gt; )_
+
+Specifies the image DPR.
+
+```js
+builder.dpr( 2 );
+```
+
 ### focus
 
 _focus( &lt;expr&gt; )_
