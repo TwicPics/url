@@ -14,18 +14,8 @@ module.exports = {
         );
         assert.throws( () => url.placeholder().placeholder() );
         assert.throws( () => url.placeholder().src( `dir/my-image.png` ) );
-        assert.throws( () =>
-            url
-                .placeholder()
-                .max( 600 )
-                .placeholder()
-        );
-        assert.throws( () =>
-            url
-                .placeholder()
-                .max( 600 )
-                .src( `dir/my-image.png` )
-        );
+        assert.throws( () => url.placeholder().max( 600 ).placeholder() );
+        assert.throws( () => url.placeholder().max( 600 ).src( `dir/my-image.png` ) );
         assert.done();
     },
     "transformations": assert => {
