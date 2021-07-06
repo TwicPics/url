@@ -73,7 +73,7 @@ addTest( `output`, Error, `unknown` );
 addTest( `output`, ``, null );
 addTest( `output`, ``, undefined );
 
-for ( const o of [ `auto`, `avif`, `image`, `heif`, `jpeg`, `maincolor`, `meancolor`, `png`, `preview`, `webp` ] ) {
+for ( const o of [ `auto`, `avif`, `heif`, `image`, `jpeg`, `maincolor`, `meancolor`, `png`, `preview`, `webp` ] ) {
     addTest( `output`, `output=${ o }`, o );
     addTest( o, `output=${ o }` );
 }
