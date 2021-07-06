@@ -107,7 +107,6 @@ for ( const resizer of [
     `resize`,
     `resizeMax`,
     `resizeMin`,
-    `step`,
 ] ) {
     const nameInUrl = resizer.replace( rUnCamel, letter => `-${ letter.toLowerCase() }` );
     addTest( resizer, `${ nameInUrl }=W`, `W` );
