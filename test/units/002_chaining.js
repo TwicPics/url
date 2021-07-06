@@ -7,12 +7,12 @@ module.exports = {
         assert.expect( 1 );
         assert.strictEqual(
             url
-                .format( `png` )
+                .output( `png` )
                 .cover( `1:1` )
                 .resize( 500 )
                 .src( `http://<END>` )
                 .url(),
-            `https://i.twic.pics/v1/cover=1:1/resize=500/format=png/http://<END>`
+            `https://i.twic.pics/v1/cover=1:1/resize=500/output=png/http://<END>`
         );
         assert.done();
     },
@@ -20,12 +20,12 @@ module.exports = {
         assert.expect( 1 );
         assert.strictEqual(
             url
-                .format( `png` )
+                .output( `png` )
                 .cover( `1:1` )
                 .resize( 500 )
                 .src( `<END>` )
                 .url(),
-            `https://i.twic.pics/<END>?v1/cover=1:1/resize=500/format=png`
+            `https://i.twic.pics/<END>?v1/cover=1:1/resize=500/output=png`
         );
         assert.done();
     },

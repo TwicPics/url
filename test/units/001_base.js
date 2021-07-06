@@ -66,16 +66,16 @@ addTest( `background`, Error, 0 );
 addTest( `background`, Error, `` );
 addTest( `background`, ``, null );
 
-addTest( `format`, Error );
-addTest( `format`, Error, true );
-addTest( `format`, Error, false );
-addTest( `format`, Error, `unknown` );
-addTest( `format`, ``, null );
-addTest( `format`, ``, undefined );
+addTest( `output`, Error );
+addTest( `output`, Error, true );
+addTest( `output`, Error, false );
+addTest( `output`, Error, `unknown` );
+addTest( `output`, ``, null );
+addTest( `output`, ``, undefined );
 
-for ( const format of [ `jpeg`, `png`, `webp` ] ) {
-    addTest( `format`, `format=${ format }`, format );
-    addTest( format, `format=${ format }` );
+for ( const o of [ `auto`, `avif`, `image`, `heif`, `jpeg`, `maincolor`, `meancolor`, `png`, `preview`, `webp` ] ) {
+    addTest( `output`, `output=${ o }`, o );
+    addTest( o, `output=${ o }` );
 }
 
 const rUnCamel = /[A-Z]/g;

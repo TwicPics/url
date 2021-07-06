@@ -33,7 +33,7 @@ addTests( `dataFocus`, [
     [ `no focus`, () => url, `` ],
     [ `focus first`, () => url.focus( 30, 40 ), `30x40` ],
     [ `focus after resize`, () => url.resize( 50 ).focus( 30, 40 ), `` ],
-    [ `focus after format`, () => url.webp().focus( 30, 40 ), `30x40` ],
+    [ `focus after output`, () => url.webp().focus( 30, 40 ), `30x40` ],
 ] );
 
 addTests( `dataSrc`, [
@@ -56,26 +56,26 @@ addTests( `dataTransform`, [
     [ `nothing`, () => url, `` ],
     [ `resize`, () => url.resize( 300 ), `resize=300` ],
     [ `background`, () => url.background( `<color>` ), `background=<color>` ],
-    [ `format`, () => url.png(), `format=png` ],
+    [ `output`, () => url.png(), `output=png` ],
     [ `background & resize`, () => url.background( `<color>` ).resize( 300 ), `resize=300/background=<color>` ],
-    [ `format & resize`, () => url.png().resize( 300 ), `resize=300/format=png` ],
+    [ `output & resize`, () => url.png().resize( 300 ), `resize=300/output=png` ],
     [
-        `background, format & resize`,
+        `background, output & resize`,
         () =>
             url
                 .background( `<color>` )
                 .png()
                 .resize( 300 ),
-        `resize=300/background=<color>/format=png`,
+        `resize=300/background=<color>/output=png`,
     ],
     [
-        `format, background & resize`,
+        `output, background & resize`,
         () =>
             url
                 .png()
                 .background( `<color>` )
                 .resize( 300 ),
-        `resize=300/background=<color>/format=png`,
+        `resize=300/background=<color>/output=png`,
     ],
     [ `focus first (-)`, () => url.focus( 30, 40 ), `` ],
     [ `focus first (true)`, () => url.focus( 30, 40 ), `focus=30x40`, true ],

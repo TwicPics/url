@@ -27,7 +27,7 @@ module.exports = {
                 .cover( `1:1` )
                 .max( 200 )
                 .url(),
-            `https://i.twic.pics/v1/cover=1:1/max=200/format=png/placeholder:auto`,
+            `https://i.twic.pics/v1/cover=1:1/max=200/output=png/placeholder:auto`,
             `after`
         );
         assert.strictEqual(
@@ -37,7 +37,7 @@ module.exports = {
                 .max( 200 )
                 .placeholder()
                 .url(),
-            `https://i.twic.pics/v1/cover=1:1/max=200/format=png/placeholder:auto`,
+            `https://i.twic.pics/v1/cover=1:1/max=200/output=png/placeholder:auto`,
             `before`
         );
         assert.strictEqual(
@@ -47,7 +47,7 @@ module.exports = {
                 .placeholder()
                 .max( 200 )
                 .url(),
-            `https://i.twic.pics/v1/cover=1:1/max=200/format=png/placeholder:auto`,
+            `https://i.twic.pics/v1/cover=1:1/max=200/output=png/placeholder:auto`,
             `before and after`
         );
         assert.done();
