@@ -108,6 +108,17 @@ Adds an authentication token.
 builder.auth( "aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa" );
 ```
 
+### auto
+
+_auto()_
+
+Shortcut for `output( "auto" )`.
+
+### avif
+
+_avif()_
+
+Shortcut for `output( "avif" )`.
 
 ### background
 
@@ -287,19 +298,15 @@ builder.focus( {
     x: 67,
     y: 987,
 } );
+// This lines uses the smart crop
+builder.focus( "auto" );
 ```
 
-### format
+### heif
 
-_format( &lt;type&gt; )_
+_heif()_
 
-Sets the image format.
-
-Accepted types are `"jpeg"`, `"png"` and `"webp"`.
-
-```js
-builder.format( "webp" );
-```
+Shortcut for `output( "heif" )`.
 
 ### host
 
@@ -320,11 +327,23 @@ builder.host( "my-brand.twic.pics" );
 builder.host( "https://my-brand.twic.pics" );
 ```
 
+### image
+
+_image()_
+
+Shortcut for `output( "image" )`.
+
 ### jpeg
 
 _jpeg()_
 
-Shortcut for `format( "jpeg" )`.
+Shortcut for `output( "jpeg" )`.
+
+### maincolor
+
+_maincolor()_
+
+Shortcut for `output( "maincolor" )`.
 
 ### max
 
@@ -346,6 +365,12 @@ builder.max( {
 } );
 ```
 
+### meancolor
+
+_meancolor()_
+
+Shortcut for `output( "meancolor" )`.
+
 ### min
 
 _min( &lt;expr&gt; )_
@@ -364,6 +389,28 @@ builder.min( {
     width: 500,
     height: 400,
 } );
+```
+
+### output
+
+_output( &lt;type&gt; )_
+
+Sets the image output format.
+
+Accepted types are:
+- `"auto"`
+- `"avif"`
+- `"image"`
+- `"heif"`
+- `"jpeg"`
+- `"maincolor"`
+- `"meancolor"`
+- `"png"`
+- `"preview"`
+- `"webp"`
+
+```js
+builder.output( "webp" );
 ```
 
 ### placeholder
@@ -430,7 +477,13 @@ builder.placeholder( {
 
 _png()_
 
-Shortcut for `format( "png" )`.
+Shortcut for `output( "png" )`.
+
+### preview
+
+_preview()_
+
+Shortcut for `output( "preview" )`.
 
 ### quality
 
@@ -438,7 +491,7 @@ _quality( &lt;level&gt; )_
 
 Sets the image quality.
 
-`level` must be between `1` & `100`. Please note that the PNG format does not take quality into account for now.
+`level` must be between `1` & `100`.
 
 ```js
 builder.quality( 20 );
@@ -450,7 +503,7 @@ _qualityMax( &lt;level&gt; )_
 
 Sets the maximum image quality.
 
-`level` must be between `1` & `100`. Please note that the PNG format does not take quality into account for now.
+`level` must be between `1` & `100`.
 
 ```js
 builder.qualityMax( 80 );
@@ -462,7 +515,7 @@ _qualityMin( &lt;level&gt; )_
 
 Sets the minimum image quality.
 
-`level` must be between `1` & `100`. Please note that the PNG format does not take quality into account for now.
+`level` must be between `1` & `100`.
 
 ```js
 builder.qualityMin( 50 );
@@ -556,26 +609,6 @@ const precrop = builder.src( MY_IMAGE ).crop( {
 builder.cover( 500, 500 ).src( precop );
 ```
 
-### step
-
-_step( &lt;expr&gt; )_
-
-_step( &lt;width&gt; [, &lt;height&gt; ] )_
-
-_step( { width, height } )_
-
-Adds a `step` transformation.
-
-```js
-// These three lines are strictly equivalent
-builder.step( "10x10" );
-builder.step( 10, 10 );
-builder.step( {
-    width: 10,
-    height: 10,
-} );
-```
-
 ### toString
 
 _toString()_
@@ -597,7 +630,7 @@ Alias of `toString`.
 
 _webp()_
 
-Shortcut for `format( "webp" )`.
+Shortcut for `output( "webp" )`.
 
 ## License
 
