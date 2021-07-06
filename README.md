@@ -645,6 +645,21 @@ builder.toString(); // throws an exception
 builder.src( MY_IMAGE_URL ).toString(); // works
 ```
 
+### truecolor
+
+_truecolor( &lt;bool&gt; )_
+
+_truecolor( &lt;expr&gt; )_
+
+Sets truecolor status.
+
+```js
+builder.truecolor( true );
+builder.truecolor( false );
+builder.truecolor( "on" );
+builder.truecolor( "off" );
+```
+
 ### turn
 
 _turn( &lt;angle&gt; )_

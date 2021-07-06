@@ -87,6 +87,19 @@ addTest( `flip`, `flip=both`, `both` );
 addTest( `flip`, `flip=x`, `x` );
 addTest( `flip`, `flip=y`, `y` );
 
+addTest( `truecolor`, Error );
+addTest( `truecolor`, ``, 0 );
+addTest( `truecolor`, ``, `` );
+addTest( `truecolor`, ``, null );
+addTest( `truecolor`, ``, undefined );
+addTest( `truecolor`, `truecolor`, NaN );
+addTest( `truecolor`, `truecolor`, Number.NEGATIVE_INFINITY );
+addTest( `truecolor`, `truecolor`, Number.POSITIVE_INFINITY );
+addTest( `truecolor`, `truecolor=on`, `on` );
+addTest( `truecolor`, `truecolor=off`, `off` );
+addTest( `truecolor`, `truecolor`, true );
+addTest( `truecolor`, ``, false );
+
 addTest( `turn`, Error );
 addTest( `turn`, ``, 0 );
 addTest( `turn`, ``, `` );
