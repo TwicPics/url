@@ -112,6 +112,18 @@ addTest( `turn`, `turn=flip`, `flip` );
 addTest( `turn`, `turn=left`, `left` );
 addTest( `turn`, `turn=right`, `right` );
 
+addTest( `zoom`, Error );
+addTest( `zoom`, Error, false );
+addTest( `zoom`, ``, true );
+addTest( `zoom`, Error, `` );
+addTest( `zoom`, Error, null );
+addTest( `zoom`, Error, NaN );
+addTest( `zoom`, Error, Number.NEGATIVE_INFINITY );
+addTest( `zoom`, Error, Number.POSITIVE_INFINITY );
+addTest( `zoom`, Error, 0 );
+addTest( `zoom`, ``, 1 );
+addTest( `zoom`, `zoom=2`, 2 );
+
 addTest( `output`, Error );
 addTest( `output`, Error, true );
 addTest( `output`, Error, false );

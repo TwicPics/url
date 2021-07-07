@@ -690,6 +690,17 @@ _webp()_
 
 Shortcut for `output( "webp" )`.
 
+### zoom
+
+_zoom( &lt;level&gt; )_
+
+Adds a zoom transformation.
+
+```js
+builder.zoom( "1.5" );
+builder.zoom( 2 );
+```
+
 ## License
 
 © [TwicPics](mailto:hello@twic.pics), 2018-2019 – licensed under the [MIT license][license-url].
