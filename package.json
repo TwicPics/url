@@ -29,5 +29,5 @@
         "coveralls": "nyc report --reporter=text-lcov | coveralls",
         "test": "nyc node test"
     },
-    "version": "0.1.0-pre"
+    "version": "0.1.0"
 }
