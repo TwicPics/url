@@ -1,4 +1,4 @@
-<img align="right" width="25%" src="logo.png">
+<img align="right" width="25%" src="https://raw.githubusercontent.com/twicpics/url/master/logo.png">
 
 # @twicpics/url
 
