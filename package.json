@@ -23,9 +23,10 @@
     "license": "MIT",
     "main":  "lib/index.js",
     "name": "@twicpics/url",
+    "private": true,
+    "removePublish": [ "devDependencies", "eslintConfig", "scripts" ],
     "scripts": {
         "coverage": "nyc report --reporter=text-lcov > coverage.lcov",
         "test": "nyc node test"
-    },
-    "version": "0.1.1"
+    }
 }

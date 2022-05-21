@@ -1,4 +1,5 @@
 /.nyc_output
 /node_modules
+/publish
+/*.lock
 /*.lcov
-/yarn.lock

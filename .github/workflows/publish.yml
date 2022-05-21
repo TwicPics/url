@@ -1,0 +1,47 @@
+on: 
+
+  push:
+    tags:
+      - "*"
+
+  workflow_dispatch:
+
+jobs:
+
+  publish:
+
+    if: github.repository == 'twicpics/url'
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: checkout
+      uses: actions/checkout@v3
+      with:
+        # to be able to get tags
+        # when manually triggering
+        fetch-depth: 0
+
+    - name: install NodeJS
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+
+    - name: install NPM dependencies
+      run: npm install
+
+    - name: run tests
+      run: node test
+
+    - name: prepare publish
+      run: node scripts/preparePublish "$( git describe --tags --abbrev=0 )"
+
+    - name: publish
+      run: |
+        cd publish
+        echo "//registry.npmjs.org/:_authToken=\${NPM_TOKEN}" > .npmrc
+        npm publish ${DRY_RUN}
+      env:
+        DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && '--dry-run' || '' }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

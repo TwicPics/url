@@ -1,4 +1,6 @@
 /.*
+/script
+/test
+/*.lcov
 /*.lock
 /logo.png
-/test
