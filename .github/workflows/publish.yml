@@ -35,7 +35,7 @@ jobs:
       run: node test
 
     - name: prepare publish
-      run: node scripts/preparePublish.js "$( git describe --tags --abbrev=0 )"
+      run: node ./scripts/preparePublish "$( git describe --tags --abbrev=0 )"
 
     - name: publish
       run: |
