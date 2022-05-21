@@ -1,0 +1,49 @@
+on:
+
+  push:
+    branches:
+    - "**"
+
+  pull_request:
+    branches:
+    - "**"
+
+jobs:
+
+  test:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version:
+        - 14.x
+        - 16.x
+        - 18.x
+
+    steps:
+
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: install NodeJS ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: install NPM dependencies
+      run: npm install
+
+    - name: run tests
+      run: npm run test
+
+    - name: compute coverage
+      if: matrix.node-version == '18.x'
+      run: npm run coverage
+
+    - name: send result to coveralls
+      if: matrix.node-version == '18.x'
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: coverage.lcov
