@@ -696,7 +696,7 @@ builder.zoom( 2 );
 
 ## License
 
-© [TwicPics](mailto:hello@twic.pics), 2018-2019 – licensed under the [MIT license][license-url].
+© [TwicPics](mailto:hello@twic.pics), 2018-2022 – licensed under the [MIT license][license-url].
 
 [coveralls-image]: https://img.shields.io/coveralls/TwicPics/url.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/TwicPics/url
