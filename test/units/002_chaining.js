@@ -66,4 +66,37 @@ module.exports = {
         assert.throws( () => url.src( url.resize( 100 ) ) );
         assert.done();
     },
+    "chaining color filters - classic API": assert => {
+        assert.expect( 1 );
+        const tmp =
+            url
+                .protanopia()
+                .tritanopia( 0.5 )
+                .protanopia( 0 )
+                .deuteranopia( 0.25 )
+                .tritanopia( 0.1 )
+                .achromatopsia();
+        assert.strictEqual(
+            tmp.src( `http://<END>` ).url(),
+            `https://i.twic.pics/v1/deuteranopia=0.25/tritanopia=0.1/achromatopsia/http://<END>`
+        );
+        assert.done();
+    },
+    "chaining color filters - catch-all API": assert => {
+        assert.expect( 1 );
+        const tmp =
+            url
+                .protanopia()
+                .tritanopia( 0.5 )
+                .protanopia( 0 )
+                .deuteranopia( 0.25 )
+                .tritanopia( 0.1 )
+                .achromatopsia()
+                .protanopia( 0 );
+        assert.strictEqual(
+            tmp.src( `<END>` ).url(),
+            `https://i.twic.pics/<END>?v1/deuteranopia=0.25/tritanopia=0.1/achromatopsia`
+        );
+        assert.done();
+    },
 };
