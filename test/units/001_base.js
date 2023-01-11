@@ -62,11 +62,13 @@ addTest( `auth`, `auth:aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa`, `aaaaaaaa-aaaa-4aa
 addTest( `auth`, Error, `not-a-valid-token` );
 addTest( `auth`, Error );
 
-addTest( `background`, Error, false );
-addTest( `background`, Error, true );
-addTest( `background`, Error, 0 );
-addTest( `background`, Error, `` );
-addTest( `background`, ``, null );
+for ( const color of [ `background`, `border` ] ) {
+    addTest( color, Error, false );
+    addTest( color, Error, true );
+    addTest( color, Error, 0 );
+    addTest( color, Error, `` );
+    addTest( color, ``, null );
+}
 
 addTest( `flip`, Error );
 addTest( `flip`, Error, false );
@@ -151,6 +153,7 @@ for ( const resizer of [
     `coverMax`,
     `coverMin`,
     `crop`,
+    `inside`,
     `max`,
     `min`,
     `resize`,

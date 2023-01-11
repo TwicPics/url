@@ -162,6 +162,16 @@ Sets the image background. This will show behind translucent pixels using alpha 
 builder.background( `red` );
 ```
 
+### [border](https://www.twicpics.com/docs/reference/transformations#border)
+
+_border( &lt;color&gt; )_
+
+Sets the image border. This will show in borders resulting from an inside transformation.
+
+```js
+builder.border( `red` );
+```
+
 ### [contain](https://www.twicpics.com/docs/reference/transformations#contain)
 
 _contain( &lt;expr&gt; )_
@@ -366,6 +376,26 @@ builder.focus( {
 } );
 // This lines uses the smart crop
 builder.focus( "auto" );
+```
+
+### [inside](https://www.twicpics.com/docs/reference/transformations#inside)
+
+_inside( &lt;expr&gt; )_
+
+_inside( &lt;width&gt; [, &lt;height&gt; ] )_
+
+_inside( { width, height } )_
+
+Adds an `inside` transformation.
+
+```js
+// These three lines are strictly equivalent
+builder.inside( "500x400" );
+builder.inside( 500, 400 );
+builder.inside( {
+    width: 500,
+    height: 400,
+} );
 ```
 
 ### [heif](https://www.twicpics.com/docs/reference/transformations#output)

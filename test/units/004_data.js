@@ -56,8 +56,16 @@ addTests( `dataTransform`, [
     [ `nothing`, () => url, `` ],
     [ `resize`, () => url.resize( 300 ), `resize=300` ],
     [ `background`, () => url.background( `<color>` ), `background=<color>` ],
+    [ `border`, () => url.border( `<color>` ), `border=<color>` ],
+    [
+        `border & background`,
+        () => url.border( `<color1>` ).background( `<color2>` ),
+        `background=<color2>/border=<color1>`,
+    ],
     [ `output`, () => url.png(), `output=png` ],
     [ `background & resize`, () => url.background( `<color>` ).resize( 300 ), `resize=300/background=<color>` ],
+    [ `border & resize`, () => url.border( `<color>` ).resize( 300 ), `resize=300/border=<color>` ],
+    [ `border & resize`, () => url.border( `<color>` ).resize( 300 ), `resize=300/border=<color>` ],
     [ `output & resize`, () => url.png().resize( 300 ), `resize=300/output=png` ],
     [
         `background, output & resize`,
@@ -69,6 +77,15 @@ addTests( `dataTransform`, [
         `resize=300/background=<color>/output=png`,
     ],
     [
+        `border, output & resize`,
+        () =>
+            url
+                .border( `<color>` )
+                .png()
+                .resize( 300 ),
+        `resize=300/border=<color>/output=png`,
+    ],
+    [
         `output, background & resize`,
         () =>
             url
@@ -76,6 +93,15 @@ addTests( `dataTransform`, [
                 .background( `<color>` )
                 .resize( 300 ),
         `resize=300/background=<color>/output=png`,
+    ],
+    [
+        `output, border & resize`,
+        () =>
+            url
+                .png()
+                .border( `<color>` )
+                .resize( 300 ),
+        `resize=300/border=<color>/output=png`,
     ],
     [ `focus first (-)`, () => url.focus( 30, 40 ), `` ],
     [ `focus first (true)`, () => url.focus( 30, 40 ), `focus=30x40`, true ],
