@@ -1,6 +1,8 @@
 /* eslint-disable max-lines */
 "use strict";
 
+const Crypto = require( `../../lib/Crypto.js` );
+const { randomBytes } = require( `crypto` );
 const url = require( `../..` );
 
 const tests = {};
@@ -261,6 +263,11 @@ addTest( `src`, Error, 15 );
 
 addTest( `url`, Error );
 
+addTest( `multiple`, Error );
+addTest( `multiple`, Error, `~` );
+addTest( `multiple`, Error, true );
+addTest( `multiple`, Error, undefined );
+
 for ( const filter of [ `achromatopsia`, `deuteranopia`, `protanopia`, `tritanopia` ] ) {
     addTest( filter, filter );
     addTest( filter, filter, 1 );
@@ -323,6 +330,45 @@ Object.assign( tests, {
         assert.strictEqual( tmp.src( `?V1` ).url(), `https://i.twic.pics/?v1/resize=300&V1` );
         assert.strictEqual( tmp.src( `?V1/` ).url(), `https://i.twic.pics/?v1/resize=300&V1/` );
         assert.strictEqual( tmp.src( `?V1/image` ).url(), `https://i.twic.pics/?v1/resize=300&V1/image` );
+        assert.done();
+    },
+    "path method": assert => {
+        assert.expect( 4 );
+        const tmp = url.src( `file.png` );
+        assert.strictEqual( tmp.path( `dir1`, `dir2` ).url(), `https://i.twic.pics/dir1/dir2/file.png` );
+        assert.strictEqual( tmp.path( `dir1/dir2` ).url(), `https://i.twic.pics/dir1/dir2/file.png` );
+        assert.strictEqual( tmp.path().url(), `https://i.twic.pics/file.png` );
+        assert.strictEqual( tmp.path( undefined ).url(), `https://i.twic.pics/undefined/file.png` );
+        assert.done();
+    },
+    "multiple method": assert => {
+        const key = randomBytes( 16 ).toString( `base64` );
+        const badRaw = `not-a-url`;
+        const raw = `https://mydomain.com`;
+        const expected = ( new Crypto( key ) ).encrypt( raw );
+        const expectedError = `src ${ badRaw } is not a properly formed URL`;
+        const badRawThrow = code => {
+            try {
+                code();
+            } catch ( e ) {
+                assert.strictEqual( e.message, expectedError );
+            }
+        };
+        const _url = url.multiple( key );
+        assert.expect( 10 );
+        assert.strictEqual( _url.src( raw ).url(), `https://i.twic.pics/${ expected }` );
+        assert.strictEqual( url.src( _url.src( raw ) ).url(), `https://i.twic.pics/${ expected }` );
+        assert.strictEqual( url.src( raw ).multiple( key ).url(), `https://i.twic.pics/${ expected }` );
+        assert.strictEqual( _url.path( `p` ).src( raw ).url(), `https://i.twic.pics/p/${ expected }` );
+        assert.strictEqual(
+            url.multiple( randomBytes( 16 ).toString( `base64` ) ).src( _url.src( raw ) ).url(),
+            `https://i.twic.pics/${ expected }`
+        );
+        badRawThrow( () => url.multiple( key ).src( badRaw ) );
+        badRawThrow( () => url.src( badRaw ).multiple( key ) );
+        assert.throws( () => url.multiple( key ).multiple( key ) );
+        assert.throws( () => url.multiple( key ).placeholder() );
+        assert.throws( () => url.placeholder().multiple( key ) );
         assert.done();
     },
 } );
