@@ -17,10 +17,20 @@ Here are some examples of what it can do:
 const builder = require( "@twicpics/url" );
 
 // Create a url in one pass
-const onePassUrl = builder.cover( "1:1" ).resize( 700 ).src( SRC_URL ).url();
+const onePassUrl =
+    builder
+        .cover( "1:1" )
+        .resize( 700 )
+        .src( "image.jpg" )
+        .url();
 
 // Pre-crop an image then apply different transformations to it
-const precrop = builder.src( SRC_URL ).focus( "25p", "71p" ).crop( 560, 280 );
+const precrop =
+    builder
+        .src( "image.jpg" )
+        .focus( "25p", "71p" )
+        .crop( 560, 280 );
+
 const squareUrl = precrop.cover( "1:1" ).url();
 const landscapeUrl = precrop.cover( "16:9" ).url();
 
@@ -28,22 +38,28 @@ const landscapeUrl = precrop.cover( "16:9" ).url();
 const square = builder.cover( "1:1" ).resize( 300 );
 const landscape = builder.cover( "1:1" ).resize( 300 );
 
-const squaredUrl = square.src( SRC_URL ).url();
+const squaredUrl = square.src( "image.jpg" ).url();
 const squaredPrecrop = square.src( precrop ).url();
 
-const landscapedUrl = landscape.src( SRC_URL ).url();
+const landscapedUrl = landscape.src( "image.jpg" ).url();
 const landscapedPrecrop = landscape.src( precrop ).url();
+
+// Scope to a given base path
+const root = builder.path( "root-path" );
+
+const firstImageInRoot = scoped.src( "image1.jpg" ).url();
+const secondImageInRoot = scoped.src( "image2.jpg" ).url();
 ```
 
 ## Installation
 
-When developping in Node.js, just `npm install`:
+Use `npm install`:
 
 ```
 npm install @twicpics/url --save
 ```
 
-If you wish to use the module client-side, then you'll have to use your favorite packager. If you wanna target older browsers, a transpiler like babel may be of use.
+___This is a server-side package for NodeJS. You cannot use it client-side.___
 
 ## Usage
 
@@ -57,13 +73,23 @@ const builder = require( "@twicpics/url" );
 const myFirstUrl = builder.src( MY_IMAGE_URL ).resize( 300 ).url();
 ```
 
+Preferably, and if you're in ESM mode, you can use an `import` statement:
+
+```js
+// Get the builder
+import builder from "@twicpics/url";
+
+// Use the builder
+const myFirstUrl = builder.src( MY_IMAGE_URL ).resize( 300 ).url();
+```
+
 The builder's API is fluent and each method call returns a new immutable object. As such you can re-use an existing object and create a totally new and independent URL:
 
 ```js
-const authorizedAndSquared = builder.auth( MY_TOKEN ).cover( "1:1" );
+const squared = builder.cover( "1:1" );
 
-const url1 = authorizedAndSquared.src( MY_IMAGE_URL_1 ).url();
-const url2 = authorizedAndSquared.src( MY_IMAGE_URL_2 ).url();
+const url1 = squared.src( "image1.jpg" ).url();
+const url2 = squared.src( "image2.jpg" ).url();
 ```
 
 Last, but not least, any builder object can be used as a source image by another builder object. So you can create generic manipulations to be applied on different, eventually pre-transformed, images:
@@ -71,11 +97,15 @@ Last, but not least, any builder object can be used as a source image by another
 ```js
 const square500 = builder.cover( 500, 500 );
 
-// Use authentication for an image I don't own
-const external = builder.auth( MY_TOKEN ).src( URL_TO_IMAGE_I_DONT_OWN );
+// Use a multiple sources path for an image I don't own
+const external =
+    builder
+        .path( MY_PATH )
+        .multiple( MY_ENCRYPTION_KEY )
+        .src( URL_TO_AN_IMAGE_I_DONT_OWN );
 
 // Precrop an image I own
-const precrop = builder.src( URL_TO_IMAGE_I_OWN ).crop( {
+const precrop = builder.src( `image.png` ).crop( {
     x: 150,
     y: 256,
     width: 700,
@@ -91,29 +121,38 @@ square500.src( precop ).url();
 
 ## API
 
-### auth
+### [achromatopsia](https://www.twicpics.com/docs/reference/transformations#span-classexperimentalachromatopsiaspan)
 
-_auth( &lt;token&gt; )_
+_achromatopsia()_
 
-Adds an authentication token.
+_achromatopsia( &lt;level&gt; )_
+
+Applies the achromatopsia color filter.
 
 ```js
-builder.auth( "aaaaaaaa-aaaa-4aaa-aaaa-aaaaaaaaaaaa" );
+// full strength
+builder.achromatopsia();
+
+// half strength
+builder.achromatopsia( 0.5 );
+
+// disable filter
+builder.achromatopsia( 0 );
 ```
 
-### auto
+### [auto](https://www.twicpics.com/docs/reference/transformations#output)
 
 _auto()_
 
 Shortcut for `output( "auto" )`.
 
-### avif
+### [avif](https://www.twicpics.com/docs/reference/transformations#output)
 
 _avif()_
 
 Shortcut for `output( "avif" )`.
 
-### background
+### [background](https://www.twicpics.com/docs/reference/transformations#background)
 
 _background( &lt;color&gt; )_
 
@@ -123,7 +162,7 @@ Sets the image background. This will show behind translucent pixels using alpha 
 builder.background( `red` );
 ```
 
-### contain
+### [contain](https://www.twicpics.com/docs/reference/transformations#contain)
 
 _contain( &lt;expr&gt; )_
 
@@ -143,7 +182,7 @@ builder.contain( {
 } );
 ```
 
-### containMax
+### [containMax](https://www.twicpics.com/docs/reference/transformations#contain-max)
 
 _containMax( &lt;expr&gt; )_
 
@@ -163,7 +202,7 @@ builder.containMax( {
 } );
 ```
 
-### containMin
+### [containMin](https://www.twicpics.com/docs/reference/transformations#contain-min)
 
 _containMin( &lt;expr&gt; )_
 
@@ -183,7 +222,7 @@ builder.containMin( {
 } );
 ```
 
-### cover
+### [cover](https://www.twicpics.com/docs/reference/transformations#cover)
 
 _cover( &lt;expr&gt; )_
 
@@ -203,7 +242,7 @@ builder.cover( {
 } );
 ```
 
-### coverMax
+### [coverMax](https://www.twicpics.com/docs/reference/transformations#cover-max)
 
 _coverMax( &lt;expr&gt; )_
 
@@ -223,7 +262,7 @@ builder.coverMax( {
 } );
 ```
 
-### coverMin
+### [coverMin](https://www.twicpics.com/docs/reference/transformations#cover-min)
 
 _coverMin( &lt;expr&gt; )_
 
@@ -243,7 +282,7 @@ builder.coverMin( {
 } );
 ```
 
-### crop
+### [crop](https://www.twicpics.com/docs/reference/transformations#crop)
 
 _crop( &lt;expr&gt; )_
 
@@ -273,17 +312,26 @@ builder.crop( {
 } );
 ```
 
-### dpr
+### [deuteranopia](https://www.twicpics.com/docs/reference/transformations#span-classexperimentaldeuteranopiaspan)
 
-_dpr( &lt;number&gt; )_
+_deuteranopia()_
 
-Specifies the image DPR.
+_deuteranopia( &lt;level&gt; )_
+
+Applies the deuteranopia color filter.
 
 ```js
-builder.dpr( 2 );
+// full strength
+builder.deuteranopia();
+
+// half strength
+builder.deuteranopia( 0.5 );
+
+// disable filter
+builder.deuteranopia( 0 );
 ```
 
-### flip
+### [flip](https://www.twicpics.com/docs/reference/transformations#flip)
 
 _flip( &lt;axis&gt; )_
 
@@ -298,7 +346,7 @@ builder.flip( "x" );
 builder.flip( "y" );
 ```
 
-### focus
+### [focus](https://www.twicpics.com/docs/reference/transformations#focus)
 
 _focus( &lt;expr&gt; )_
 
@@ -320,7 +368,7 @@ builder.focus( {
 builder.focus( "auto" );
 ```
 
-### heif
+### [heif](https://www.twicpics.com/docs/reference/transformations#output)
 
 _heif()_
 
@@ -330,7 +378,7 @@ Shortcut for `output( "heif" )`.
 
 _host( &lt;location&gt; )_
 
-Sets the TwicPics instance that is to be requested.
+Sets the TwicPics instance that is targetted.
 
 By default, the builder will target `https://i.twic.pics`. Use `host()` to specify another location.
 
@@ -345,25 +393,25 @@ builder.host( "my-brand.twic.pics" );
 builder.host( "https://my-brand.twic.pics" );
 ```
 
-### image
+### [image](https://www.twicpics.com/docs/reference/transformations#output)
 
 _image()_
 
 Shortcut for `output( "image" )`.
 
-### jpeg
+### [jpeg](https://www.twicpics.com/docs/reference/transformations#output)
 
 _jpeg()_
 
 Shortcut for `output( "jpeg" )`.
 
-### maincolor
+### [maincolor](https://www.twicpics.com/docs/reference/transformations#output)
 
 _maincolor()_
 
 Shortcut for `output( "maincolor" )`.
 
-### max
+### [max](https://www.twicpics.com/docs/reference/transformations#max)
 
 _max( &lt;expr&gt; )_
 
@@ -383,13 +431,13 @@ builder.max( {
 } );
 ```
 
-### meancolor
+### [meancolor](https://www.twicpics.com/docs/reference/transformations#output)
 
 _meancolor()_
 
 Shortcut for `output( "meancolor" )`.
 
-### min
+### [min](https://www.twicpics.com/docs/reference/transformations#min)
 
 _min( &lt;expr&gt; )_
 
@@ -409,7 +457,24 @@ builder.min( {
 } );
 ```
 
-### output
+### multiple
+
+_multiple( &lt;key&gt; )_
+
+Provides the encryption key for a [multiple sources path](https://www.twicpics.com/docs/essentials/path-configuration#multiple-sources-paths).
+
+Further calls to `src()` will expect a full-fledged URL.
+
+Use `path()`, prior or after the call to `multiple()`, in order to target the actual multiple sources path if it's not the root of your domain.
+
+```js
+builder
+    .path( `targetPath` )
+    .multiple( myKey )
+    .src( `https://mydomain.com/image.png` );
+```
+
+### [output](https://www.twicpics.com/docs/reference/transformations#output)
 
 _output( &lt;type&gt; )_
 
@@ -429,6 +494,17 @@ Accepted types are:
 
 ```js
 builder.output( "webp" );
+```
+
+### path
+
+_path( [ &lt;segment&gt;... ] )_
+
+Adds a list of path segments to be prepended to the final src.
+
+```js
+builder.path( "path", "to" ).src( "image.png" ).url()
+    === "http://<domain>/path/to/image.png";
 ```
 
 ### placeholder
@@ -491,19 +567,38 @@ builder.placeholder( {
 } );
 ```
 
-### png
+### [png](https://www.twicpics.com/docs/reference/transformations#output)
 
 _png()_
 
 Shortcut for `output( "png" )`.
 
-### preview
+### [preview](https://www.twicpics.com/docs/reference/transformations#output)
 
 _preview()_
 
 Shortcut for `output( "preview" )`.
 
-### quality
+### [protanopia](https://www.twicpics.com/docs/reference/transformations#span-classexperimentalprotanopiaspan)
+
+_protanopia()_
+
+_protanopia( &lt;level&gt; )_
+
+Applies the protanopia color filter.
+
+```js
+// full strength
+builder.protanopia();
+
+// half strength
+builder.protanopia( 0.5 );
+
+// disable filter
+builder.protanopia( 0 );
+```
+
+### [quality](https://www.twicpics.com/docs/reference/transformations#quality)
 
 _quality( &lt;level&gt; )_
 
@@ -515,7 +610,7 @@ Sets the image quality.
 builder.quality( 20 );
 ```
 
-### qualityMax
+### [qualityMax](https://www.twicpics.com/docs/reference/transformations#quality-max)
 
 _qualityMax( &lt;level&gt; )_
 
@@ -527,7 +622,7 @@ Sets the maximum image quality.
 builder.qualityMax( 80 );
 ```
 
-### qualityMin
+### [qualityMin](https://www.twicpics.com/docs/reference/transformations#quality-min)
 
 _qualityMin( &lt;level&gt; )_
 
@@ -539,7 +634,7 @@ Sets the minimum image quality.
 builder.qualityMin( 50 );
 ```
 
-### resize
+### [resize](https://www.twicpics.com/docs/reference/transformations#resize)
 
 _resize( &lt;expr&gt; )_
 
@@ -559,7 +654,7 @@ builder.resize( {
 } );
 ```
 
-### resizeMax
+### [resizeMax](https://www.twicpics.com/docs/reference/transformations#resize-max)
 
 _resizeMax( &lt;expr&gt; )_
 
@@ -579,7 +674,7 @@ builder.resizeMax( {
 } );
 ```
 
-### resizeMin
+### [resizeMin](https://www.twicpics.com/docs/reference/transformations#resize-min)
 
 _resizeMin( &lt;expr&gt; )_
 
@@ -638,7 +733,26 @@ builder.toString(); // throws an exception
 builder.src( MY_IMAGE_URL ).toString(); // works
 ```
 
-### truecolor
+### [tritanopia](https://www.twicpics.com/docs/reference/transformations#span-classexperimentaltritanopiaspan)
+
+_tritanopia()_
+
+_tritanopia( &lt;level&gt; )_
+
+Applies the tritanopia color filter.
+
+```js
+// full strength
+builder.tritanopia();
+
+// half strength
+builder.tritanopia( 0.5 );
+
+// disable filter
+builder.tritanopia( 0 );
+```
+
+### [truecolor](https://www.twicpics.com/docs/reference/transformations#truecolor)
 
 _truecolor( &lt;bool&gt; )_
 
@@ -653,7 +767,7 @@ builder.truecolor( "on" );
 builder.truecolor( "off" );
 ```
 
-### turn
+### [turn](https://www.twicpics.com/docs/reference/transformations#turn)
 
 _turn( &lt;angle&gt; )_
 
@@ -677,13 +791,13 @@ _url()_
 
 Alias of `toString`.
 
-### webp
+### [webp](https://www.twicpics.com/docs/reference/transformations#output)
 
 _webp()_
 
 Shortcut for `output( "webp" )`.
 
-### zoom
+### [zoom](https://www.twicpics.com/docs/reference/transformations#zoom)
 
 _zoom( &lt;level&gt; )_
 
@@ -696,7 +810,7 @@ builder.zoom( 2 );
 
 ## License
 
-© [TwicPics](mailto:hello@twic.pics), 2018-2022 – licensed under the [MIT license][license-url].
+© [TwicPics](mailto:hello@twic.pics), 2018-2023 – licensed under the [MIT license][license-url].
 
 [coveralls-image]: https://img.shields.io/coveralls/TwicPics/url.svg?style=flat-square
 [coveralls-url]: https://coveralls.io/github/TwicPics/url
