@@ -2,7 +2,7 @@
     "author": "TwicPics <hello@twic.pics> (https://www.twicpics.com)",
     "description": "a library to build TwicPics URLs",
     "devDependencies": {
-        "eslint": "8.31.0",
+        "eslint": "8.32.0",
         "eslint-config-creative-area": "0.11.1",
         "eslint-formatter-codeframe": "7.32.1",
         "nodeunit": "0.11.3",
