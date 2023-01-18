@@ -9,7 +9,7 @@
         "nyc": "15.1.0"
     },
     "engines": {
-        "node": ">=16"
+        "node": ">=14"
     },
     "eslintConfig": {
         "extends": "creative-area/es2021/script",
